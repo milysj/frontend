@@ -59,9 +59,7 @@ const Cadastrar = () => {
         dados.titulacao = titulacao;
       }
 
-      const res = await fetch(
-        "http://backend-node-estudemy.vercel.app/api/register",
-        {
+      const res = await fetch
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(dados),
