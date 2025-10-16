@@ -17,14 +17,16 @@ const Login = () => {
         setErro('');
 
         try {
-            const res = await fetch('http://localhost:5000/api/usuarios/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+            const res = await fetch("http://backend-node-estudemy.vercel.app/api/usuarios/login",
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    usuarioEmail: email,   // ⚠️ Campos devem bater com o back-end
-                    usuarioSenha: senha
+                  usuarioEmail: email, // ⚠️ Campos devem bater com o back-end
+                  usuarioSenha: senha,
                 }),
-            });
+              }
+            );
 
             const data = await res.json();
 
