@@ -34,7 +34,7 @@ const Login = () => {
                 router.push('/pages/menuTrilhas');
             } else {
                 // ⚠️ Mostra a mensagem específica do back-end
-                setErro(data.mensagem || 'Erro desconhecido');
+                setErro(data.message || "Erro desconhecido");
             }
         } catch (error) {
             setErro('Erro ao conectar com o servidor.');

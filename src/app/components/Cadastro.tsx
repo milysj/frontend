@@ -69,7 +69,7 @@ const Cadastrar = () => {
       const data = await res.json();
 
       if (!res.ok) {
-        setErro(data.mensagem || "Erro no cadastro");
+        setErro(data.message || "Erro no cadastro");
         return;
       }
 
