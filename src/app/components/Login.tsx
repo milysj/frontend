@@ -18,13 +18,13 @@ const Login = () => {
 
         try {
             const API_URL = process.env.NEXT_PUBLIC_API_URL;
-            const res = await fetch(`${API_URL}/api/usuarios`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    usuario_Email: email,   // ⚠️ Campos devem bater com o back-end
-                    usuario_Senha: senha
-                }),
+            const res = await fetch(`${API_URL}/api/auth/login`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                usuario_Email: email, // ⚠️ Campos devem bater com o back-end
+                usuario_Senha: senha,
+              }),
             });
 
             const data = await res.json();
