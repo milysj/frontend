@@ -11,20 +11,22 @@ const Login = () => {
     const [senha, setSenha] = useState('');
     const [erro, setErro] = useState('');
     const [mostrarSenha, setMostrarSenha] = useState(false);
+    const [sucesso, setSucesso] = useState("");
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setErro('');
+        setSucesso('');
 
         try {
             const API_URL = process.env.NEXT_PUBLIC_API_URL;
             const res = await fetch(`${API_URL}/api/auth/login`, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
                 usuario_Email: email, // ⚠️ Campos devem bater com o back-end
                 usuario_Senha: senha,
-              }),
+                }),
             });
 
             const data = await res.json();
@@ -32,10 +34,13 @@ const Login = () => {
             if (res.ok) {
                 // Login bem-sucedido
                 router.push('/pages/menuTrilhas');
+                setSucesso("Logado com sucesso!");
             } else {
                 // ⚠️ Mostra a mensagem específica do back-end
                 setErro(data.message || "Erro desconhecido");
             }
+
+            
         } catch (error) {
             setErro('Erro ao conectar com o servidor.');
             console.error(error);
@@ -48,7 +53,7 @@ const Login = () => {
             style={{ backgroundImage: `url('/img/background-image-login-register.png')` }}
         >
             <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
-               <div className="mb-6 text-center">
+                <div className="mb-6 text-center">
                     <Image width={400} height={128} src="/svg/EstudeMyLogo.svg" alt="Logo" />
                 </div>
                 
@@ -114,6 +119,9 @@ const Login = () => {
                     </a>
                     </p>
 
+                    {sucesso && (
+                        <p className="text-green-600 text-sm text-center">{sucesso}</p>
+                    )}
                 </form>
 
                 <div className="mt-8 pt-6 border-t border-gray-200 text-center"></div>
