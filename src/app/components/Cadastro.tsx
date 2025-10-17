@@ -60,7 +60,7 @@ const Cadastrar = () => {
       }
 
       const API_URL = process.env.NEXT_PUBLIC_API_URL;
-      const res = await fetch(`${API_URL}/api/register`, {
+      const res = await fetch(`${API_URL}/cadastro`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dados),

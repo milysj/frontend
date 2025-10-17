@@ -18,7 +18,7 @@ const Login = () => {
 
         try {
             const API_URL = process.env.NEXT_PUBLIC_API_URL;
-            const res = await fetch(`${API_URL}/api/usuarios/login`, {
+            const res = await fetch(`${API_URL}/api/usuarios`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
