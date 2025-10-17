@@ -19,26 +19,28 @@ const Cadastrar = () => {
   const [erro, setErro] = useState("");
   const [mostrarSenhas, setMostrarSenhas] = useState(false);
   const [sucesso, setSucesso] = useState("");
+  const [message, setMessage] = useState(""); 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErro("");
     setSucesso("");
+    setMessage("");
 
     if (senha !== confirmarSenha) {
-      setErro("As senhas não coincidem.");
+      setMessage("As senhas não coincidem.");
       return;
     }
     if (!tipoUsuario) {
-      setErro("Selecione o tipo de usuário.");
+      setMessage("Selecione o tipo de usuário.");
       return;
     }
     if (!username) {
-      setErro("O username é obrigatório.");
+      setMessage("O username é obrigatório.");
       return;
     }
     if (!dataNascimento) {
-      setErro("A data de nascimento é obrigatória.");
+      setMessage("A data de nascimento é obrigatória.");
       return;
     }
 
@@ -69,7 +71,8 @@ const Cadastrar = () => {
       const data = await res.json();
 
       if (!res.ok) {
-        setErro(data.message || "Erro no cadastro");
+        setMessage(data.message || "Erro no cadastro");
+        setErro(data.error);
         return;
       }
 
@@ -78,7 +81,7 @@ const Cadastrar = () => {
       window.location.href = "/pages/login";
     } catch (error) {
       console.error(error);
-      setErro("Erro ao conectar com o servidor.");
+      setMessage("Erro ao conectar com o servidor.");
     }
   };
 
@@ -279,6 +282,7 @@ const Cadastrar = () => {
               Cadastrar {tipoUsuario === "ALUNO" ? "Aluno" : "Professor"}
             </Button>
 
+            {message && <p className="text-red-600 text-sm text-center">{message}</p>}
             {erro && <p className="text-red-600 text-sm text-center">{erro}</p>}
             {sucesso && (
               <p className="text-green-600 text-sm text-center">{sucesso}</p>
