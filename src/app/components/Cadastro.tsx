@@ -44,14 +44,14 @@ const Cadastrar = () => {
 
     try {
       const dados: any = {
-        usuarioNome: nome,
-        usuarioEmail: email,
-        usuarioUserName: username,
-        usuarioDataNascimento: dataNascimento,
-        usuarioSenha: senha,
-        usuarioTipo: tipoUsuario,
-        usuarioAutobiografia: "",
-        usuarioPontuacao: 0,
+        usuario_Nome: nome,
+        usuario_Email: email,
+        usuario_userName: username,
+        usuario_Data_Nascimento: dataNascimento,
+        usuario_Senha: senha,
+        tipo_Usuario: tipoUsuario,
+        usuario_Autobiografia: "",
+        usuario_Pontuacao_Total: 0,
       };
 
       if (tipoUsuario === "PROFESSOR") {
