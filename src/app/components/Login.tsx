@@ -22,8 +22,8 @@ const Login = () => {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    usuarioEmail: email,   // ⚠️ Campos devem bater com o back-end
-                    usuarioSenha: senha
+                    usuario_Email: email,   // ⚠️ Campos devem bater com o back-end
+                    usuario_Senha: senha
                 }),
             });
 
