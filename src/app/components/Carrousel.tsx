@@ -1,13 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronRightIcon, ChevronLeftIcon } from "lucide-react"; // Ícones para navegação
-import { useRef } from "react";
+import { ChevronRightIcon, ChevronLeftIcon } from "lucide-react";
+import { useRef, useState, useEffect } from "react";
 import { Button, Card } from "react-bootstrap";
 
-// ===============================
 // Dados do carrossel
-// ===============================
 const items = [
   {
     id: 1,
@@ -47,13 +45,11 @@ const items = [
   },
 ];
 
-// ===============================
 // Componente do item individual
-// ===============================
-function CarouselItem({ item }: { item: (typeof items)[0] }) {
+function CarouselItem({ item, cardWidth }: { item: (typeof items)[0], cardWidth: string }) {
   return (
     <Link href={`/pages/trilha?id=${item.id}`}>
-      <Card style={{ width: "15rem" }}>
+      <Card style={{ width: cardWidth, minWidth: cardWidth }}>
         <Card.Img
           variant="top"
           src={item.image}
@@ -61,35 +57,61 @@ function CarouselItem({ item }: { item: (typeof items)[0] }) {
           className="mx-auto max-w-30 max-h-24 min-w-28 min-h-24 object-contain my-2 rounded-xl"
         />
         <Card.Body>
-          <Card.Title>{item.title}</Card.Title>
-          <Card.Text>{item.description}</Card.Text>
-          <Button variant="primary">Clique para entrar</Button>
+          <Card.Title className="text-base">{item.title}</Card.Title>
+          <Card.Text className="text-sm">{item.description}</Card.Text>
+          <Button variant="primary" size="sm">Clique para entrar</Button>
         </Card.Body>
       </Card>
     </Link>
   );
 }
 
-// ===============================
 // Componente do Carrossel
-// ===============================
 function Carrousel() {
-  // Referência do container que permite scroll horizontal
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [screenSize, setScreenSize] = useState<'small' | 'medium' | 'large'>('large');
+  const [cardWidth, setCardWidth] = useState('15rem');
+  const [scrollAmount, setScrollAmount] = useState(300);
+
+  // Detectar tamanho da tela e ajustar cards
+  useEffect(() => {
+    const updateSize = () => {
+      const width = window.innerWidth;
+      
+      if (width < 400) {
+        setScreenSize('small');
+        setCardWidth('11rem'); // 176px
+        setScrollAmount(190); // card width + gap
+      } else if (width < 768) {
+        setScreenSize('medium');
+        setCardWidth('13rem'); // 208px
+        setScrollAmount(225); // card width + gap
+      } else {
+        setScreenSize('large');
+        setCardWidth('15rem'); // 240px
+        setScrollAmount(300); // card width + gap
+      }
+    };
+    
+    updateSize();
+    window.addEventListener("resize", updateSize);
+    
+    return () => window.removeEventListener("resize", updateSize);
+  }, []);
 
   // Função para mover o carrossel para a esquerda com loop
   const handleScrollLeft = () => {
     if (scrollRef.current) {
-      // Se o scroll está no início (posição 0)
       if (scrollRef.current.scrollLeft === 0) {
-        // Vá para o final
         scrollRef.current.scrollTo({
           left: scrollRef.current.scrollWidth,
           behavior: "smooth",
         });
       } else {
-        // Caso contrário, apenas role para a esquerda
-        scrollRef.current.scrollBy({ left: -300, behavior: "smooth" });
+        scrollRef.current.scrollBy({
+          left: -scrollAmount,
+          behavior: "smooth",
+        });
       }
     }
   };
@@ -97,53 +119,56 @@ function Carrousel() {
   // Função para mover o carrossel para a direita com loop
   const handleScrollRight = () => {
     if (scrollRef.current) {
-      // Verifica se o scroll chegou ao final
-      // Usamos uma pequena tolerância (1px) para evitar problemas de arredondamento
       if (
         scrollRef.current.scrollLeft + scrollRef.current.clientWidth >=
         scrollRef.current.scrollWidth - 1
       ) {
-        // Se está no final, volte para o início
-        scrollRef.current.scrollTo({ left: 0, behavior: "smooth" });
+        scrollRef.current.scrollTo({
+          left: 0,
+          behavior: "smooth",
+        });
       } else {
-        // Caso contrário, apenas role para a direita
-        scrollRef.current.scrollBy({ left: 300, behavior: "smooth" });
+        scrollRef.current.scrollBy({
+          left: scrollAmount,
+          behavior: "smooth",
+        });
       }
     }
   };
 
+  const isMobile = screenSize !== 'large';
+  const isSmall = screenSize === 'small';
+
   return (
-    <div className="flex flex-col items-center gap-4 p-4 rounded-xl w-full max-w-screen-xl mx-auto">
-      {/* ===============================
-          Barra de navegação do carrossel
-          =============================== */}
+    <div className={`flex flex-col items-center gap-4 rounded-xl w-full mx-auto ${isMobile ? 'p-2' : 'p-4'}`}>
+      {/* Barra de navegação do carrossel */}
       <div className="flex items-center gap-2 w-full">
         {/* Botão de scroll para a esquerda */}
         <button
-          onClick={handleScrollLeft} // ATUALIZADO
+          onClick={handleScrollLeft}
           title="Scroll para a esquerda"
-          className="p-3 hover:bg-sky-50 rounded"
+          className={`flex-shrink-0 hover:bg-sky-50 rounded ${isSmall ? 'p-0.5' : isMobile ? 'p-1' : 'p-3'}`}
         >
-          <ChevronLeftIcon className="w-10 h-10" />
+          <ChevronLeftIcon className={isSmall ? 'w-5 h-5' : isMobile ? 'w-6 h-6' : 'w-10 h-10'} />
         </button>
 
         {/* Container com scroll horizontal */}
         <div
           ref={scrollRef}
-          className="flex gap-4 overflow-x-auto no-scrollbar scroll-smooth w-full py-2"
+          className={`flex overflow-x-auto no-scrollbar scroll-smooth w-full py-2 ${isSmall ? 'gap-2' : 'gap-4'}`}
         >
           {items.map((item) => (
-            <CarouselItem key={item.id} item={item} />
+            <CarouselItem key={item.id} item={item} cardWidth={cardWidth} />
           ))}
         </div>
 
         {/* Botão de scroll para a direita */}
         <button
           title="Scroll para a direita"
-          onClick={handleScrollRight} // ATUALIZADO
-          className="p-3 hover:bg-sky-50 rounded"
+          onClick={handleScrollRight}
+          className={`flex-shrink-0 hover:bg-sky-50 rounded ${isSmall ? 'p-0.5' : isMobile ? 'p-1' : 'p-3'}`}
         >
-          <ChevronRightIcon className="w-10 h-10" />
+          <ChevronRightIcon className={isSmall ? 'w-5 h-5' : isMobile ? 'w-6 h-6' : 'w-10 h-10'} />
         </button>
       </div>
     </div>
