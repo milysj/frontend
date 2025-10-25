@@ -52,21 +52,21 @@ const Topo = () => {
       label: "Lições Salvas",
       href: "/pages/salvas",
     },
-    {
-      icon: <Envelope size={18} />,
-      label: "Caixa de Entrada",
-      href: "/pages/mensagens",
-    },
+    // {
+    //   icon: <Envelope size={18} />,
+    //   label: "Caixa de Entrada",
+    //   href: "/pages/mensagens",
+    // },
     {
       icon: <BackpackFill size={18} />,
       label: "Criar Trilhas",
       href: "/pages/criarTrilha",
     },
-    {
-      icon: <Cart size={18} />,
-      label: "Loja",
-      href: "/pages/loja",
-    },
+    // {
+    //   icon: <Cart size={18} />,
+    //   label: "Loja",
+    //   href: "/pages/loja",
+    // },
   ];
 
   // Dados dos menus superiores (navbar)
@@ -86,10 +86,8 @@ const Topo = () => {
 
   // Itens do dropdown "Mais"
   const dropdownItems = [
-    { href: "/pages/conta", label: "Conta" },
-    { href: "/pages/calendario", label: "Calendário" },
     { href: "/pages/faleConosco", label: "Fale Conosco" },
-    { href: "/pages/faq", label: "FAQ" },
+    
     { href: "/", label: "Sair", variant: "danger" },
   ];
 

@@ -59,6 +59,9 @@ export default function PerfilPage() {
                 <Link className="blue-btn" href={"/pages/conquistas"}>
                   CONQUISTAS
                 </Link>
+                <Link className="blue-btn" href={"/pages/conta"}>
+                  CONTA
+                </Link>
               </div>
             </div>
             {/* Rodapé */}

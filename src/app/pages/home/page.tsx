@@ -48,7 +48,7 @@ export default function menuTrilhas() {
                         
 
                         {/* Seção "Novidades" */}
-                        <div className="pt-3 w-full max-w-6xl mx-auto px-24">
+                        <div className="pt-3 w-full max-w-6xl mx-auto px-22">
                             <div
                                 className="text-3xl p-4 rounded-xl text-gray-800 font-bold bg-white bg-opacity-80 backdrop-blur-sm">
                                 Novidades

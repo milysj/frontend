@@ -89,7 +89,7 @@ function Carrousel() {
         });
       } else {
         // Caso contrário, apenas role para a esquerda
-        scrollRef.current.scrollBy({ left: -300, behavior: "smooth" });
+        scrollRef.current.scrollBy({ left: -270, behavior: "smooth" });
       }
     }
   };
@@ -107,7 +107,7 @@ function Carrousel() {
         scrollRef.current.scrollTo({ left: 0, behavior: "smooth" });
       } else {
         // Caso contrário, apenas role para a direita
-        scrollRef.current.scrollBy({ left: 300, behavior: "smooth" });
+        scrollRef.current.scrollBy({ left: 270,behavior: "smooth" });
       }
     }
   };
