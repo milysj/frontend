@@ -38,31 +38,34 @@ export default function menuTrilhas() {
                         <Topo/>
 
                         {/* Seção "Continue" */}
-                        <div className="pt-3 w-full max-w-6xl mx-auto px-4">
+                        <div className="pt-3 w-full max-w-6xl mx-auto px-24 ">
                             <div
                                 className="text-3xl p-4 rounded-xl text-gray-800 font-bold bg-white bg-opacity-80 backdrop-blur-sm">
                                 Continue
                             </div>
+                            <Carrousel/>
                         </div>
-                        <Carrousel/>
+                        
 
                         {/* Seção "Novidades" */}
-                        <div className="pt-3 w-full max-w-6xl mx-auto px-4">
+                        <div className="pt-3 w-full max-w-6xl mx-auto px-24">
                             <div
                                 className="text-3xl p-4 rounded-xl text-gray-800 font-bold bg-white bg-opacity-80 backdrop-blur-sm">
                                 Novidades
                             </div>
+                            <Carrousel/>
                         </div>
-                        <Carrousel/>
+                        
 
                         {/* Seção "Melhores para você" */}
-                        <div className="pt-3 w-full max-w-6xl mx-auto px-4">
+                        <div className="pt-3 w-full max-w-6xl mx-auto px-24">
                             <div
                                 className="text-3xl p-4 rounded-xl text-gray-800 font-bold bg-white bg-opacity-80 backdrop-blur-sm">
                                 Melhores para você
                             </div>
+                            <Carrousel/>
                         </div>
-                        <Carrousel/>
+
                     </div>
 
                     {/* Rodapé */}
