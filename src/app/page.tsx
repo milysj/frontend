@@ -5,6 +5,7 @@ import CoinRain from "@/app/components/CoinRain"; // Efeito visual de moedas cai
 
 import {motion} from "framer-motion"; // Biblioteca para animações
 import Image from "next/image";
+import Script from "next/script";
 
 // Configuração da fonte Jaro
 
@@ -20,15 +21,15 @@ const tooltips = [
 export default function LandingPage() {
     return (
         <>
-        <head>
-        <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "tvolq13xii");
-    </script>
-</head>
+        <Script id="microsoft-clarity" strategy="afterInteractive">
+                {`
+                    (function(c,l,a,r,i,t,y){
+                        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+                    })(window, document, "clarity", "script", "tvolq13xii");
+                `}
+            </Script>
         <main
             className="h-screen flex flex-col text-white relative overflow-hidden bg-cover bg-center"
             style={{backgroundImage: `url('/img/background-image.png')`}} // Imagem de fundo
