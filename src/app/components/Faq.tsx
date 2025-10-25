@@ -1,7 +1,7 @@
 const Faq = () => {
     return (
       // Container principal com largura máxima, padding e borda arredondada
-      <div className="flex items-center justify-center p-4 m-auto">
+      <div className="flex items-center justify-center px-25 py-4 m-auto">
         {/* ===============================
           Card principal da conta
           =============================== */}
