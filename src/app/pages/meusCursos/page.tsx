@@ -27,13 +27,13 @@ export default function meusCursos() {
                         <Topo/>
 
                         {/* Seção "Meus Cursos" */}
-                        <div className="pt-3 w-full max-w-6xl mx-auto px-4">
+                        <div className="pt-3 w-full max-w-6xl mx-auto px-24 ">
                             <div
                                 className="text-3xl p-4 rounded-xl text-gray-800 font-bold bg-white bg-opacity-80 backdrop-blur-sm">
                                 Meus Cursos
                             </div>
+                            <Carrousel/>
                         </div>
-                        <Carrousel/>
 
                     </div>
 

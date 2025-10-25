@@ -27,15 +27,13 @@ export default function menuTrilhas() {
                         <Topo/>
 
                         {/* Seção do título das lições salvas */}
-                        <div className="pt-3 w-full max-w-6xl mx-auto px-4">
+                        <div className="pt-3 w-full max-w-6xl mx-auto px-24 ">
                             <div
                                 className="text-3xl p-4 rounded-xl text-gray-800 font-bold bg-white bg-opacity-80 backdrop-blur-sm">
                                 Lições Salvas
                             </div>
+                            <Carrousel/>
                         </div>
-
-                        {/* Componente de carrossel exibindo as lições */}
-                        <Carrousel/>
                     </div>
 
                     {/* Rodapé */}
