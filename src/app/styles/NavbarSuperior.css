@@ -129,9 +129,9 @@
     transition: transform 0.2s ease; /* Animação de rotação do ícone */
 }
 
-.dropdown-toggle:hover .nav-link2 svg {
+/* .dropdown-toggle:hover .nav-link2 svg {
     transform: rotate(180deg); /* Rotaciona ícone ao hover */
-}
+
 
 /* ===========================
    Responsividade (telas menores)

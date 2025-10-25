@@ -9,13 +9,13 @@ import {
   Book,
   BarChart,
   BookmarkFill,
-  Envelope,
+  // Envelope,
   BackpackFill,
   HouseDoor,
   Person,
   ThreeDots,
   Gear,
-  Cart,
+  // Cart,
 } from "react-bootstrap-icons";
 
 // Componente principal do topo/navegação
@@ -76,18 +76,13 @@ const Topo = () => {
       icon: <HouseDoor size={18} />,
       label: "Home",
     },
-    { href: "/pages/perfil", icon: <Person size={18} />, label: "Perfil" },
-    {
-      href: "/pages/configuracoes",
-      icon: <Gear size={18} />,
-      label: "Configurações",
-    },
+    
   ];
 
   // Itens do dropdown "Mais"
   const dropdownItems = [
-    { href: "/pages/faleConosco", label: "Fale Conosco" },
-    
+    { href: "/pages/perfil", icon: <Person size={18} />, label: "Perfil" },
+    { href: "/pages/configuracoes", label: "Configurações" },
     { href: "/", label: "Sair", variant: "danger" },
   ];
 
@@ -245,6 +240,7 @@ const Topo = () => {
           </div>
         </Menu>
       </Sidebar>
+
       {/* Conteúdo principal e navbar superior */}
       <div
         style={{
@@ -362,8 +358,8 @@ const Topo = () => {
                       style={{ cursor: "pointer" }}
                     >
                       <div className="d-flex align-items-center nav-link2">
-                        <ThreeDots className="me-2" />
-                        Mais
+                        <Person className="me-2" />
+                        
                       </div>
 
                       {/* Itens do dropdown */}

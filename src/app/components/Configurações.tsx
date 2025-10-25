@@ -64,13 +64,16 @@ export default function Configuracoes() {
           <button type="button" onClick={() => window.location.href="/pages/faq"} className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
             FAQ
           </button>
+          <button type="button" onClick={() => window.location.href="/pages/faleConosco"} className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 my-2">
+            Fale Conosco
+          </button>
         </div>
 
         {/* ===============================
             Seção Privacidade
         =============================== */}
         <div className="mb-4">
-          <h3 className="font-semibold border-b pb-1 mb-2">Privacidade</h3>
+          <h3 className=" font-semibold border-b pb-1 mb-2">Privacidade</h3>
           <label className="block mb-2">
             <input
               type="checkbox"
@@ -81,7 +84,7 @@ export default function Configuracoes() {
             />
             Receber notificações
           </label>
-          <label className="block ml-2 mt-6">
+          <label className="block mx-2 mt-6">
             <input
               type="checkbox"
               name="publicProfile"
@@ -96,7 +99,7 @@ export default function Configuracoes() {
         {/* ===============================
             Seção Tema
         =============================== */}
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <h3 className="font-semibold border-b pb-1 mb-2">Tema</h3>
           <label className="block">
             Escolha o tema:
@@ -110,7 +113,7 @@ export default function Configuracoes() {
               <option value="Escuro">Escuro</option>
             </select>
           </label>
-        </div>
+        </div> */}
 
         {/* Botão de submit */}
         <button

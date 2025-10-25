@@ -20,7 +20,7 @@ export default function PerfilPage() {
         {/* ===========================
             Container relativo para z-index
             =========================== */}
-        <div className="relative z-10">
+        <div className="relative z-0">
           {/* ===========================
               Estrutura principal da página
               =========================== */}
@@ -28,9 +28,9 @@ export default function PerfilPage() {
             {/* Topo / Barra de navegação */}
             <Topo />
             {/* Área de conteúdo principal */}
-            <div className="pt-3 w-full max-w-6xl mx-auto px-4  bg-white mt-20">
+            <div className="pt-3 max-w-screen max-w-6xl ml-25 mr-10 px-25 bg-white mt-4">
               {/* Imagem do personagem */}
-              <div className="text-3xl p-4 rounded-xl">
+              <div className="text-3xl p-3 rounded-xl">
                 <Image
                   className="mx-auto"
                   src="/img/personagem.png"
