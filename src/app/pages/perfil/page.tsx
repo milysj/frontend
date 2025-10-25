@@ -3,6 +3,7 @@ import Footer from "@/app/components/Footer";       // Componente do rodapé
 import Topo from "@/app/components/Topo";         // Componente do topo/navegação
 import Link from "next/link";                     // Componente para navegação entre páginas
 import Image from "next/image";
+import ExperienceBar from "@/app/components/ExperienceBar";
 
 export default function PerfilPage() {
   return (
@@ -44,6 +45,14 @@ export default function PerfilPage() {
               <div className="character">
                 <p>Guerreiro</p>
               </div>
+              {/* Barra de Experiência */}
+              <div className="mx-20">
+                <ExperienceBar 
+                  currentLevel={10}   //userData.level
+                  currentXp={1200}      //userData.xp
+                  xpToNextLevel={1500}  //userData.xpRequired
+                />
+              </div>
 
               {/* Botões de navegação do perfil */}
               <div className="buttons-container">
@@ -64,10 +73,10 @@ export default function PerfilPage() {
                 </Link>
               </div>
             </div>
-            {/* Rodapé */}
+            
             
           </div>
-          
+          {/* Rodapé */}
           <Footer />
         </div>
       </div>

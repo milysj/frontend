@@ -28,7 +28,7 @@ export default function DadosPessoaisPage() {
             <Topo />
 
             {/* Área de conteúdo principal: Dados Pessoais */}
-            <div className="pt-3 w-full max-w-11/12 mx-auto px-4">
+            <div className="pt-3 w-7xl max-w-11/12 mx-auto px-4">
               <ConsultAi />
             </div>
 

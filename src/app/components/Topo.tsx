@@ -20,8 +20,8 @@ import {
   BackpackFill,
   HouseDoor,
   Person,
-  ThreeDots,
-  Gear,
+  // ThreeDots,
+  // Gear,
   Search,
   // Cart,
 } from "react-bootstrap-icons";
@@ -95,14 +95,14 @@ const Topo = () => {
   const navItems = [
     {
       href: "/pages/home",
-      icon: <HouseDoor size={18} />,
+      icon: <HouseDoor size={20} />,
       label: "Home",
     },
   ];
 
-  // Itens do dropdown "Mais"
+  // Itens do dropdown "Perfil"
   const dropdownItems = [
-    { href: "/pages/perfil", icon: <Person size={18} />, label: "Perfil" },
+    { href: "/pages/perfil", icon: <Person size={20} />, label: "Perfil" },
     { href: "/pages/configuracoes", label: "Configurações" },
     { href: "/", label: "Sair", variant: "danger" },
   ];
@@ -394,7 +394,7 @@ const Topo = () => {
                   </Nav.Item>
                 ))}
 
-                {/* Dropdown "Mais" (aparece só no desktop) */}
+                {/* Dropdown "Perfil" (aparece só no desktop) */}
                 {!isMobile && (
                   <Nav.Item as="li" className="dropdown-container">
                     <div
