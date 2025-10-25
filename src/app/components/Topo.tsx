@@ -1,7 +1,14 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
-import { Navbar, Nav, Container } from "react-bootstrap";
+import {
+  Navbar,
+  Nav,
+  Container,
+  Form,
+  Button,
+  FormControl,
+} from "react-bootstrap";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -15,6 +22,7 @@ import {
   Person,
   ThreeDots,
   Gear,
+  Search,
   // Cart,
 } from "react-bootstrap-icons";
 
@@ -27,6 +35,20 @@ const Topo = () => {
   const [showDropdown, setShowDropdown] = useState(false); // Dropdown "Mais" visível
   const [isMobile, setIsMobile] = useState(false); // Se está em tela mobile
 
+  // NOVO: Estado para a barra de pesquisa
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // NOVO: Função para lidar com a pesquisa
+  const handleSearchSubmit = (event) => {
+    event.preventDefault(); // Impede o recarregamento da página
+    if (searchTerm.trim() !== "") {
+      // Aqui você faria a lógica de pesquisa:
+      // Ex: Router.push(`/search?q=${searchTerm}`);
+      console.log("Pesquisando por:", searchTerm);
+      // Opcional: Limpar o campo após a pesquisa
+      // setSearchTerm("");
+    }
+  };
   // Hook para detectar se está em tela mobile
   useEffect(() => {
     const checkMobile = () => {
@@ -76,7 +98,6 @@ const Topo = () => {
       icon: <HouseDoor size={18} />,
       label: "Home",
     },
-    
   ];
 
   // Itens do dropdown "Mais"
@@ -297,6 +318,33 @@ const Topo = () => {
               </div>
             </Link>
 
+            {/* NOVO: Barra de Pesquisa (Posicionada à esquerda do menu de navegação) */}
+            <Form
+              className="d-flex my-2 my-lg-0 me-auto ms-lg-4"
+              onSubmit={handleSearchSubmit}
+              style={{ flexGrow: isMobile ? 1 : 0.5, maxWidth: "450px" }}
+            >
+              <FormControl
+                type="search"
+                placeholder="Pesquisar lições, trilhas..."
+                className="me-2"
+                aria-label="Search"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                style={{ height: isMobile ? "300px" : "38px" }}
+              />
+              <Button
+                variant="outline-primary"
+                type="submit"
+                style={{
+                  height: isMobile ? "32px" : "38px",
+                  padding: isMobile ? "4px 8px" : "6px 12px",
+                }}
+              >
+                <Search size={isMobile ? 16 : 18} />
+              </Button>
+            </Form>
+
             {/* Botão para abrir navbar no mobile */}
             <Navbar.Toggle
               aria-controls="top-navbar"
@@ -331,10 +379,8 @@ const Topo = () => {
                           padding: isMobile ? "4px 8px" : "8px 12px",
                           fontSize: isMobile ? "0.85rem" : "1rem",
                           minHeight: isMobile ? "32px" : "auto",
-                            cursor: "pointer",
-                            overflow: "hidden",
-                            
-                          
+                          cursor: "pointer",
+                          overflow: "hidden",
                         }}
                       >
                         {/* Ícone do item */}
@@ -359,7 +405,6 @@ const Topo = () => {
                     >
                       <div className="d-flex align-items-center nav-link2">
                         <Person className="me-2" />
-                        
                       </div>
 
                       {/* Itens do dropdown */}
