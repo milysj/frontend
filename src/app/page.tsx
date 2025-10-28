@@ -37,7 +37,7 @@ export default function LandingPage() {
             <CoinRain/> {/* Animação de moedas caindo */}
 
             {/* Barra lateral fixa com ícones e tooltips */}
-            <div className="fixed top-1/2 left-4 z-30 flex flex-col gap-6 -translate-y-1/2">
+            <div className="fixed top-1/2 left-4 z-30 flex flex-col gap-6 -translate-y-1/2 ">
                 {tooltips.map(({icon, text, color}, index) => (
                     <div className="group relative flex items-center" key={index}>
                         {/* Ícone com animação e destaque */}
