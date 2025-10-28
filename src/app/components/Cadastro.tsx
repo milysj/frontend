@@ -10,7 +10,6 @@ const Cadastrar = () => {
   const [tipoUsuario, setTipoUsuario] = useState<UsuarioTipo | "">("");
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
   const [senha, setSenha] = useState("");
   const [confirmarSenha, setConfirmarSenha] = useState("");
@@ -19,7 +18,7 @@ const Cadastrar = () => {
   const [erro, setErro] = useState("");
   const [mostrarSenhas, setMostrarSenhas] = useState(false);
   const [sucesso, setSucesso] = useState("");
-  const [message, setMessage] = useState(""); 
+  const [message, setMessage] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,26 +34,19 @@ const Cadastrar = () => {
       setMessage("Selecione o tipo de usuário.");
       return;
     }
-    if (!username) {
-      setMessage("O username é obrigatório.");
-      return;
-    }
     if (!dataNascimento) {
       setMessage("A data de nascimento é obrigatória.");
       return;
     }
 
     try {
-      const dados: any = {
-        usuario_Nome: nome,
-        usuario_Email: email,
-        usuario_userName: username,
-        usuario_Data_Nascimento: dataNascimento,
-        usuario_Senha: senha,
-        tipo_Usuario: tipoUsuario,
-        usuario_Autobiografia: "",
-        usuario_Pontuacao_Total: 0,
-      };
+        const dados: any = {
+          nome,
+          email,
+          senha,
+          dataNascimento,
+          tipoUsuario: tipoUsuario,
+        };
 
       if (tipoUsuario === "PROFESSOR") {
         dados.registro = registro;
@@ -62,7 +54,8 @@ const Cadastrar = () => {
       }
 
       const API_URL = process.env.NEXT_PUBLIC_API_URL;
-      const res = await fetch(`${API_URL}/api/cadastro`, {
+
+      const res = await fetch(`${API_URL}/api/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dados),
@@ -78,7 +71,7 @@ const Cadastrar = () => {
 
       setSucesso("Usuário cadastrado com sucesso!");
       console.log("Usuário cadastrado:", data);
-      window.location.href = "/pages/login";
+      window.location.href = "/pages/criarPerfil";
     } catch (error) {
       console.error(error);
       setMessage("Erro ao conectar com o servidor.");
@@ -90,7 +83,6 @@ const Cadastrar = () => {
     // Limpar os campos ao trocar o tipo de usuário
     setNome("");
     setEmail("");
-    setUsername("");
     setDataNascimento("");
     setSenha("");
     setConfirmarSenha("");
@@ -107,7 +99,7 @@ const Cadastrar = () => {
         <input
           type="text"
           placeholder="Seu nome completo"
-          className="rounded-lg py-2 px-4 text-sm border-1 border-gray-400 bg-gray-100"
+          className="rounded-lg py-2 px-4 text-sm border border-gray-400 bg-gray-100"
           required
           value={nome}
           onChange={(e) => setNome(e.target.value)}
@@ -118,28 +110,17 @@ const Cadastrar = () => {
         <input
           type="email"
           placeholder="Seu email"
-          className="rounded-lg py-2 px-4 text-sm border-1 border-gray-400 bg-gray-100"
+          className="rounded-lg py-2 px-4 text-sm border border-gray-400 bg-gray-100"
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
       </div>
       <div className="flex flex-col">
-        <label className="text-sm mb-1 text-left">Username:</label>
-        <input
-          type="text"
-          placeholder="Escolha um username"
-          className="rounded-lg py-2 px-4 text-sm border-1 border-gray-400 bg-gray-100"
-          required
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-      </div>
-      <div className="flex flex-col">
         <label className="text-sm mb-1 text-left">Data de Nascimento:</label>
         <input
           type="date"
-          className="rounded-lg py-2 px-4 text-sm border-1 border-gray-400 bg-gray-100"
+          className="rounded-lg py-2 px-4 text-sm border border-gray-400 bg-gray-100"
           required
           value={dataNascimento}
           onChange={(e) => setDataNascimento(e.target.value)}
@@ -155,7 +136,7 @@ const Cadastrar = () => {
         <input
           type={mostrarSenhas ? "text" : "password"}
           placeholder="Digite sua senha"
-          className="rounded-lg py-2 px-4 text-sm border-1 border-gray-400 bg-gray-100"
+          className="rounded-lg py-2 px-4 text-sm border border-gray-400 bg-gray-100"
           required
           value={senha}
           onChange={(e) => setSenha(e.target.value)}
@@ -166,7 +147,7 @@ const Cadastrar = () => {
         <input
           type={mostrarSenhas ? "text" : "password"}
           placeholder="Repita sua senha"
-          className="rounded-lg py-2 px-4 text-sm border-1 border-gray-400 bg-gray-100"
+          className="rounded-lg py-2 px-4 text-sm border border-gray-400 bg-gray-100"
           required
           value={confirmarSenha}
           onChange={(e) => setConfirmarSenha(e.target.value)}
@@ -182,7 +163,7 @@ const Cadastrar = () => {
         <input
           type="text"
           placeholder="Número do registro"
-          className="rounded-lg py-2 px-4 text-sm border-1 border-gray-400 bg-gray-100"
+          className="rounded-lg py-2 px-4 text-sm border border-gray-400 bg-gray-100"
           required
           value={registro}
           onChange={(e) => setRegistro(e.target.value)}
@@ -191,7 +172,7 @@ const Cadastrar = () => {
       <div className="flex flex-col">
         <label className="text-sm mb-1 text-left">Titulação:</label>
         <select
-          className="rounded-lg py-2 px-4 text-sm border-1 border-gray-400 bg-gray-100"
+          className="rounded-lg py-2 px-4 text-sm border border-gray-400 bg-gray-100"
           required
           value={titulacao}
           onChange={(e) => setTitulacao(e.target.value)}
@@ -214,7 +195,6 @@ const Cadastrar = () => {
         backgroundImage: `url('/img/background-image-login-register.png')`,
       }}
     >
-      {/* ✅ ALTERAÇÃO PRINCIPAL: Largura dinâmica e transição suave */}
       <div
         className={`w-full p-6 bg-white rounded-lg shadow-md transition-all duration-300 ease-in-out ${
           tipoUsuario === "PROFESSOR" ? "max-w-4xl" : "max-w-md"
@@ -262,7 +242,6 @@ const Cadastrar = () => {
         {tipoUsuario && (
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             {tipoUsuario === "PROFESSOR" ? (
-              // Layout de 2 colunas para professor
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3">
                 <div className="flex flex-col gap-3">{camposComuns}</div>
                 <div className="flex flex-col gap-3">
@@ -271,18 +250,20 @@ const Cadastrar = () => {
                 </div>
               </div>
             ) : (
-              // Layout de 1 coluna para aluno
               <div className="flex flex-col gap-3">
                 {camposComuns}
                 {camposSenha}
               </div>
             )}
 
+
             <Button type="submit" variant="primary" className="mt-2">
-              Cadastrar {tipoUsuario === "ALUNO" ? "Aluno" : "Professor"}
+              Cadastrar
             </Button>
 
-            {message && <p className="text-red-600 text-sm text-center">{message}</p>}
+            {message && (
+              <p className="text-red-600 text-sm text-center">{message}</p>
+            )}
             {erro && <p className="text-red-600 text-sm text-center">{erro}</p>}
             {sucesso && (
               <p className="text-green-600 text-sm text-center">{sucesso}</p>

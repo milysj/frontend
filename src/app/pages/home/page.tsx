@@ -1,25 +1,73 @@
 "use client";
 
-import Carrousel from "@/app/components/Carrousel";
-import Footer from "@/app/components/Footer";
-import Topo from "@/app/components/Topo";
-import Script from "next/script";
 import { useState, useEffect } from "react";
+import Script from "next/script";
+import Topo from "@/app/components/Topo";
+import Footer from "@/app/components/Footer";
+import Carrousel from "@/app/components/Carrousel";
 
-export default function MenuTrilhas() {
+interface Trilha {
+  _id: string;
+  titulo: string;
+  descricao: string;
+  materia: string;
+  dificuldade: string;
+  image?: string;
+}
+
+export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
+  const [token, setToken] = useState<string | null>(null);
 
-  // Hook para detectar se está em tela mobile
+  const [continueTrilhas, setContinueTrilhas] = useState<Trilha[]>([]);
+  const [novidades, setNovidades] = useState<Trilha[]>([]);
+  const [populares, setPopulares] = useState<Trilha[]>([]);
+
+  // Detectar mobile
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 992);
-    };
-    
+    const checkMobile = () => setIsMobile(window.innerWidth < 992);
     checkMobile();
     window.addEventListener("resize", checkMobile);
-    
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
+
+  // Ler token do localStorage no client
+  useEffect(() => {
+    const savedToken = localStorage.getItem("token");
+    setToken(savedToken);
+  }, []);
+
+  // Carregar trilhas do backend
+  useEffect(() => {
+    // Novidades
+    fetch("http://localhost:5000/api/trilhas/novidades")
+      .then((res) => res.json())
+      .then((data) => setNovidades(data || []))
+      .catch(console.error);
+
+    // Populares
+    fetch("http://localhost:5000/api/trilhas/populares")
+      .then((res) => res.json())
+      .then((data) => setPopulares(data || []))
+      .catch(console.error);
+
+    // Continue (trilhas do usuário)
+    if (token) {
+      fetch("http://localhost:5000/api/trilhas/continue", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+        .then((res) => res.json())
+        .then((data) => setContinueTrilhas(data || []))
+        .catch(console.error);
+    }
+  }, [token]);
+
+  const handleTrilhaClick = (id: string) => {
+    if (!token) return;
+    fetch(`http://localhost:5000/api/trilhas/visualizar/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    }).catch(console.error);
+  };
 
   return (
     <>
@@ -34,50 +82,39 @@ export default function MenuTrilhas() {
         `}
       </Script>
 
-      {/* Container principal da página */}
       <div
         className="min-h-screen bg-cover bg-center bg-no-repeat bg-fixed"
-        style={{
-          backgroundImage: "url('/img/backgroundteste1.png')",
-          backgroundColor: '#f3f4f6'
-        }}
+        style={{ backgroundImage: "url('/img/backgroundteste1.png')", backgroundColor: '#f3f4f6' }}
       >
-        {/* Container relativo para controle de z-index */}
-        <div className="relative z-10">
-          {/* Estrutura principal da página */}
-          <div className="flex min-h-screen flex-col transition-all duration-300 justify-space-between">
-            {/* Topo / Barra de navegação */}
-            <Topo />
+        <div className="relative z-10 flex flex-col min-h-screen">
+          <Topo />
 
-            {/* Seção "Continue" */}
-            <div className={`pt-3 w-full ${isMobile ? 'px-4' : 'max-w-6xl mx-auto px-24'}`}>
-              <div className={`${isMobile ? 'text-2xl' : 'text-3xl'} p-4 rounded-xl text-gray-800 font-bold bg-white bg-opacity-80 backdrop-blur-sm`}>
-                Continue
-              </div>
-              <Carrousel />
-            </div>
+          <Section title="Continue" isMobile={isMobile}>
+            <Carrousel items={continueTrilhas} onClick={handleTrilhaClick} />
+          </Section>
 
-            {/* Seção "Novidades" */}
-            <div className={`pt-3 w-full ${isMobile ? 'px-4' : 'max-w-6xl mx-auto px-24'}`}>
-              <div className={`${isMobile ? 'text-2xl' : 'text-3xl'} p-4 rounded-xl text-gray-800 font-bold bg-white bg-opacity-80 backdrop-blur-sm`}>
-                Novidades
-              </div>
-              <Carrousel />
-            </div>
+          <Section title="Novidades" isMobile={isMobile}>
+            <Carrousel items={novidades} onClick={handleTrilhaClick} />
+          </Section>
 
-            {/* Seção "Melhores para você" */}
-            <div className={`pt-3 w-full ${isMobile ? 'px-4' : 'max-w-6xl mx-auto px-24'}`}>
-              <div className={`${isMobile ? 'text-2xl' : 'text-3xl'} p-4 rounded-xl text-gray-800 font-bold bg-white bg-opacity-80 backdrop-blur-sm`}>
-                Melhores para você
-              </div>
-              <Carrousel />
-            </div>
-          </div>
+          <Section title="Melhores para você" isMobile={isMobile}>
+            <Carrousel items={populares} onClick={handleTrilhaClick} />
+          </Section>
 
-          {/* Rodapé */}
           <Footer />
         </div>
       </div>
     </>
+  );
+}
+
+function Section({ title, children, isMobile }: { title: string; children: React.ReactNode; isMobile: boolean }) {
+  return (
+    <div className={`pt-6 w-full ${isMobile ? 'px-4' : 'max-w-6xl mx-auto px-24'}`}>
+      <div className={`${isMobile ? 'text-2xl' : 'text-3xl'} p-4 rounded-xl font-bold text-gray-800 bg-white bg-opacity-80 backdrop-blur-sm`}>
+        {title}
+      </div>
+      {children}
+    </div>
   );
 }
