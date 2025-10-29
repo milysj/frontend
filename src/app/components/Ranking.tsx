@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Trophy } from "lucide-react";
+
 
 interface Usuario {
   position: number;
@@ -37,35 +37,31 @@ export default function Ranking() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center bg-white text-black p-6 flex-col rounded-xl shadow-md max-w-lg">
         <p>Carregando ranking...</p>
       </div>
     );
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
-      <div className="bg-white text-black p-6 flex flex-col items-center rounded-xl shadow-md w-full max-w-lg">
-
+    <div className="flex items-center justify-center p-4">
+      <div className="bg-white text-black p-6 flex flex-col items-center rounded-xl shadow-md max-w-lg">
         {/* Podium dos 3 primeiros */}
         <div className="flex items-end justify-center gap-4 mb-6 w-full">
           {rankingData.slice(1, 2).map((user) => (
             <div key={user.position} className="flex flex-col items-center">
-              <Trophy className="text-slate-300 w-10 h-10" />
               <div className="h-20 w-10 bg-slate-300 rounded-t-lg" />
             </div>
           ))}
 
           {rankingData.slice(0, 1).map((user) => (
             <div key={user.position} className="flex flex-col items-center">
-              <Trophy className="text-yellow-400 w-12 h-12" />
               <div className="h-28 w-10 bg-yellow-400 rounded-t-lg" />
             </div>
           ))}
 
           {rankingData.slice(2, 3).map((user) => (
             <div key={user.position} className="flex flex-col items-center">
-              <Trophy className="text-orange-400 w-10 h-10" />
               <div className="h-16 w-10 bg-orange-400 rounded-t-lg" />
             </div>
           ))}
@@ -73,7 +69,8 @@ export default function Ranking() {
 
         {/* Informação da posição do usuário */}
         <h1 className="text-xl font-bold mb-4 text-center">
-          Você ficou em {rankingData.length >= 17 ? "17º" : "posição"} semana passada
+          Você ficou em {rankingData.length >= 17 ? "17º" : " 17º"}{" "}
+          semana passada
         </h1>
 
         {/* Lista do ranking completo */}

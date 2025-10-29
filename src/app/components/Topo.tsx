@@ -23,6 +23,7 @@ import {
   // ThreeDots,
   // Gear,
   Search,
+  ArrowLeft, // NOVO: Ícone para fechar a pesquisa mobile
   // Cart,
 } from "react-bootstrap-icons";
 
@@ -35,10 +36,13 @@ const Topo = () => {
   const [showDropdown, setShowDropdown] = useState(false); // Dropdown "Mais" visível
   const [isMobile, setIsMobile] = useState(false); // Se está em tela mobile
 
-  // NOVO: Estado para a barra de pesquisa
+  // Estado para a barra de pesquisa
   const [searchTerm, setSearchTerm] = useState("");
 
-  // NOVO: Função para lidar com a pesquisa
+  // NOVO: Estado para controlar a barra de pesquisa no mobile
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
+
+  // Função para lidar com a pesquisa
   const handleSearchSubmit = (event) => {
     event.preventDefault(); // Impede o recarregamento da página
     if (searchTerm.trim() !== "") {
@@ -47,6 +51,10 @@ const Topo = () => {
       console.log("Pesquisando por:", searchTerm);
       // Opcional: Limpar o campo após a pesquisa
       // setSearchTerm("");
+      // Opcional: Fechar a barra de pesquisa móvel após pesquisar
+      // if (isMobile) {
+      //   setMobileSearchOpen(false);
+      // }
     }
   };
   // Hook para detectar se está em tela mobile
@@ -288,171 +296,232 @@ const Topo = () => {
               alignItems: "center",
             }}
           >
-            {/* Logo do sistema */}
-            <Link href="/">
-              <div
-                style={{
-                  marginLeft: isMobile ? "80px" : "80px",
-                  transition: "margin-left 0.3s",
-                  display: "flex",
-                  alignItems: "center",
-                  height: isMobile ? "32px" : "auto",
-                }}
-              >
+            {/* Logo do sistema - ALTERADO: Esconde se a pesquisa mobile estiver aberta */}
+            {(!isMobile || (isMobile && !mobileSearchOpen)) && (
+              <Link href="/">
                 <div
                   style={{
-                    transform: isMobile ? "scale(0.7)" : "scale(1)",
-                    transformOrigin: "left center",
+                    marginLeft: isMobile ? "80px" : "80px",
+                    transition: "margin-left 0.3s",
+                    display: "flex",
+                    alignItems: "center",
+                    height: isMobile ? "32px" : "auto",
                   }}
                 >
-                  {/* Logo */}
-                  <div className="mb-6 text-center my-1">
-                    <Image
-                      width={350}
-                      height={128}
-                      src="/svg/EstudeMyLogo.svg"
-                      alt="Logo"
-                    />
+                  <div
+                    style={{
+                      transform: isMobile ? "scale(0.7)" : "scale(1)",
+                      transformOrigin: "left center",
+                    }}
+                  >
+                    {/* Logo */}
+                    <div className="mb-6 text-center my-1">
+                      <Image
+                        width={350}
+                        height={128}
+                        src="/svg/EstudeMyLogo.svg"
+                        alt="Logo"
+                      />
+                    </div>
                   </div>
                 </div>
+              </Link>
+            )}
+
+            {/* Barra de Pesquisa (Desktop) - ALTERADO: Renderização condicional */}
+            {!isMobile && (
+              <Form
+                className="d-flex my-2 my-lg-0 me-auto ms-lg-4"
+                onSubmit={handleSearchSubmit}
+                style={{ flexGrow: 0.5, maxWidth: "450px" }}
+              >
+                <FormControl
+                  type="search"
+                  placeholder="Pesquisar lições, trilhas..."
+                  className="me-2"
+                  aria-label="Search"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  style={{ height: "38px" }}
+                />
+                <Button
+                  variant="outline-primary"
+                  type="submit"
+                  style={{
+                    height: "38px",
+                    padding: "6px 12px",
+                  }}
+                >
+                  <Search size={18} />
+                </Button>
+              </Form>
+            )}
+
+            {/* NOVO: Barra de Pesquisa (Mobile - Aberta) */}
+            {isMobile && mobileSearchOpen && (
+              <Form
+                className="d-flex flex-grow-1"
+                onSubmit={handleSearchSubmit}
+                style={{ marginLeft: "80px", marginRight: "15px" }}
+              >
+                {/* Botão de fechar */}
+                <Button
+                  variant="link"
+                  onClick={() => setMobileSearchOpen(false)}
+                  className="text-dark p-2"
+                  aria-label="Fechar pesquisa"
+                >
+                  <ArrowLeft size={18} />
+                </Button>
+                <FormControl
+                  type="search"
+                  placeholder="Pesquisar..."
+                  className="me-2"
+                  aria-label="Search"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  style={{ height: "32px" }} // CORRIGIDO: de 300px para 32px
+                  autoFocus // Foca no input ao abrir
+                />
+                <Button
+                  variant="outline-primary"
+                  type="submit"
+                  style={{
+                    height: "32px",
+                    padding: "4px 8px",
+                  }}
+                >
+                  <Search size={16} />
+                </Button>
+              </Form>
+            )}
+
+            {/* Controles da Direita (Mobile) - ALTERADO: Esconde se a pesquisa mobile estiver aberta */}
+            {isMobile && !mobileSearchOpen && (
+              <div className="d-flex align-items-center ms-auto">
+                {/* NOVO: Botão Ícone de Pesquisa (Mobile - Fechado) */}
+                <Button
+                  variant="link"
+                  onClick={() => setMobileSearchOpen(true)}
+                  className="text-dark p-2"
+                  style={{ marginRight: "8px" }}
+                  aria-label="Abrir pesquisa"
+                >
+                  <Search size={20} />
+                </Button>
+
+                {/* Botão para abrir navbar no mobile */}
+                <Navbar.Toggle
+                  aria-controls="top-navbar"
+                  onClick={() => setNavbarToggled(!navbarToggled)}
+                  className="border-0 me-3"
+                  style={{
+                    padding: isMobile ? "2px 4px" : "4px 8px",
+                    fontSize: isMobile ? "0.9rem" : "1rem",
+                  }}
+                >
+                  <span className="navbar-toggler-icon"></span>
+                </Navbar.Toggle>
               </div>
-            </Link>
+            )}
 
-            {/* NOVO: Barra de Pesquisa (Posicionada à esquerda do menu de navegação) */}
-            <Form
-              className="d-flex my-2 my-lg-0 me-auto ms-lg-4"
-              onSubmit={handleSearchSubmit}
-              style={{ flexGrow: isMobile ? 1 : 0.5, maxWidth: "450px" }}
-            >
-              <FormControl
-                type="search"
-                placeholder="Pesquisar lições, trilhas..."
-                className="me-2"
-                aria-label="Search"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                style={{ height: isMobile ? "300px" : "38px" }}
-              />
-              <Button
-                variant="outline-primary"
-                type="submit"
-                style={{
-                  height: isMobile ? "32px" : "38px",
-                  padding: isMobile ? "4px 8px" : "6px 12px",
-                }}
-              >
-                <Search size={isMobile ? 16 : 18} />
-              </Button>
-            </Form>
-
-            {/* Botão para abrir navbar no mobile */}
-            <Navbar.Toggle
-              aria-controls="top-navbar"
-              onClick={() => setNavbarToggled(!navbarToggled)}
-              className="border-0 me-3"
-              style={{
-                padding: isMobile ? "2px 4px" : "4px 8px",
-                fontSize: isMobile ? "0.9rem" : "1rem",
-              }}
-            >
-              <span className="navbar-toggler-icon"></span>
-            </Navbar.Toggle>
-
-            {/* Itens do menu superior */}
-            <Navbar.Collapse id="top-navbar" className="justify-content-end">
-              <Nav
-                as="ul"
-                className="item-menu-central"
-                style={{
-                  alignItems: "center",
-                }}
-              >
-                {/* Itens principais do menu */}
-                {navItems.map((item, index) => (
-                  <Nav.Item as="li" key={index}>
-                    <Link href={item.href}>
-                      <Nav.Link
-                        as="span" // Evita <a> aninhado
-                        className="d-flex align-items-center"
-                        onClick={() => setNavbarToggled(false)}
-                        style={{
-                          padding: isMobile ? "4px 8px" : "8px 12px",
-                          fontSize: isMobile ? "0.85rem" : "1rem",
-                          minHeight: isMobile ? "32px" : "auto",
-                          cursor: "pointer",
-                          overflow: "hidden",
-                        }}
-                      >
-                        {/* Ícone do item */}
-                        {React.cloneElement(item.icon, {
-                          className: "me-1",
-                          size: isMobile ? 16 : 18,
-                        })}
-                        {item.label}
-                      </Nav.Link>
-                    </Link>
-                  </Nav.Item>
-                ))}
-
-                {/* Dropdown "Perfil" (aparece só no desktop) */}
-                {!isMobile && (
-                  <Nav.Item as="li" className="dropdown-container">
-                    <div
-                      className="dropdown-toggle"
-                      onMouseEnter={() => setShowDropdown(true)}
-                      onMouseLeave={() => setShowDropdown(false)}
-                      style={{ cursor: "pointer" }}
-                    >
-                      <div className="d-flex align-items-center nav-link2">
-                        <Person className="me-2" />
-                      </div>
-
-                      {/* Itens do dropdown */}
-                      {showDropdown && (
-                        <div className="custom-dropdown">
-                          {dropdownItems.map((item, index) => (
-                            <Link
-                              href={item.href}
-                              key={index}
-                              className={`dropdown-item ${
-                                item.variant === "danger" ? "text-danger" : ""
-                              }`}
-                              onClick={() => setShowDropdown(false)}
-                            >
-                              {item.label}
-                            </Link>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  </Nav.Item>
-                )}
-
-                {/* Itens do dropdown "Mais" (aparecem direto no mobile) */}
-                {isMobile &&
-                  dropdownItems.map((item, index) => (
-                    <Nav.Item as="li" key={`mobile-${index}`}>
+            {/* Itens do menu superior - ALTERADO: Esconde se a pesquisa mobile estiver aberta */}
+            {(!isMobile || (isMobile && !mobileSearchOpen)) && (
+              <Navbar.Collapse id="top-navbar" className="justify-content-end">
+                <Nav
+                  as="ul"
+                  className="item-menu-central"
+                  style={{
+                    alignItems: "center",
+                  }}
+                >
+                  {/* Itens principais do menu */}
+                  {navItems.map((item, index) => (
+                    <Nav.Item as="li" key={index}>
                       <Link href={item.href}>
                         <Nav.Link
                           as="span" // Evita <a> aninhado
-                          className={`d-flex align-items-center ${
-                            item.variant === "danger" ? "text-danger" : ""
-                          }`}
+                          className="d-flex align-items-center"
                           onClick={() => setNavbarToggled(false)}
                           style={{
                             padding: isMobile ? "4px 8px" : "8px 12px",
                             fontSize: isMobile ? "0.85rem" : "1rem",
                             minHeight: isMobile ? "32px" : "auto",
                             cursor: "pointer",
+                            overflow: "hidden",
                           }}
                         >
+                          {/* Ícone do item */}
+                          {React.cloneElement(item.icon, {
+                            className: "me-1",
+                            size: isMobile ? 16 : 18,
+                          })}
                           {item.label}
                         </Nav.Link>
                       </Link>
                     </Nav.Item>
                   ))}
-              </Nav>
-            </Navbar.Collapse>
+
+                  {/* Dropdown "Perfil" (aparece só no desktop) */}
+                  {!isMobile && (
+                    <Nav.Item as="li" className="dropdown-container">
+                      <div
+                        className="dropdown-toggle"
+                        onMouseEnter={() => setShowDropdown(true)}
+                        onMouseLeave={() => setShowDropdown(false)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        <div className="d-flex align-items-center nav-link2">
+                          <Person className="me-2" />
+                        </div>
+
+                        {/* Itens do dropdown */}
+                        {showDropdown && (
+                          <div className="custom-dropdown">
+                            {dropdownItems.map((item, index) => (
+                              <Link
+                                href={item.href}
+                                key={index}
+                                className={`dropdown-item ${
+                                  item.variant === "danger" ? "text-danger" : ""
+                                }`}
+                                onClick={() => setShowDropdown(false)}
+                              >
+                                {item.label}
+                              </Link>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </Nav.Item>
+                  )}
+
+                  {/* Itens do dropdown "Mais" (aparecem direto no mobile) */}
+                  {isMobile &&
+                    dropdownItems.map((item, index) => (
+                      <Nav.Item as="li" key={`mobile-${index}`}>
+                        <Link href={item.href}>
+                          <Nav.Link
+                            as="span" // Evita <a> aninhado
+                            className={`d-flex align-items-center ${
+                              item.variant === "danger" ? "text-danger" : ""
+                            }`}
+                            onClick={() => setNavbarToggled(false)}
+                            style={{
+                              padding: isMobile ? "4px 8px" : "8px 12px",
+                              fontSize: isMobile ? "0.85rem" : "1rem",
+                              minHeight: isMobile ? "32px" : "auto",
+                              cursor: "pointer",
+                            }}
+                          >
+                            {item.label}
+                          </Nav.Link>
+                        </Link>
+                      </Nav.Item>
+                    ))}
+                </Nav>
+              </Navbar.Collapse>
+            )}
           </Container>
         </Navbar>
       </div>

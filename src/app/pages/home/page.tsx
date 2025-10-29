@@ -34,74 +34,82 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-  const savedToken = localStorage.getItem("token");
+    const savedToken = localStorage.getItem("token");
 
-  const requestInit: RequestInit = {
-    headers: savedToken ? { Authorization: `Bearer ${savedToken}` } : undefined
-  };
+    const requestInit: RequestInit = {
+      headers: savedToken
+        ? { Authorization: `Bearer ${savedToken}` }
+        : undefined,
+    };
 
-  // Função para buscar novidades
-  const fetchNovidades = async () => {
-    try {
-      const res = await fetch("http://localhost:5000/api/trilhas/novidades", requestInit);
-      if (!res.ok) {
-        console.error("Erro ao buscar novidades:", await res.text());
+    // Função para buscar novidades
+    const fetchNovidades = async () => {
+      try {
+        const res = await fetch(
+          "http://localhost:5000/api/trilhas/novidades",
+          requestInit
+        );
+        if (!res.ok) {
+          console.error("Erro ao buscar novidades:", await res.text());
+          setNovidades([]);
+          return;
+        }
+        const data = await res.json();
+        setNovidades(Array.isArray(data) ? data : []);
+      } catch (err) {
+        console.error("Erro no fetch novidades:", err);
         setNovidades([]);
-        return;
       }
-      const data = await res.json();
-      setNovidades(Array.isArray(data) ? data : []);
-    } catch (err) {
-      console.error("Erro no fetch novidades:", err);
-      setNovidades([]);
-    }
-  };
+    };
 
-  // Função para buscar populares
-  const fetchPopulares = async () => {
-    try {
-      const res = await fetch("http://localhost:5000/api/trilhas/populares", requestInit);
-      if (!res.ok) {
-        console.error("Erro ao buscar populares:", await res.text());
+    // Função para buscar populares
+    const fetchPopulares = async () => {
+      try {
+        const res = await fetch(
+          "http://localhost:5000/api/trilhas/populares",
+          requestInit
+        );
+        if (!res.ok) {
+          console.error("Erro ao buscar populares:", await res.text());
+          setPopulares([]);
+          return;
+        }
+        const data = await res.json();
+        setPopulares(Array.isArray(data) ? data : []);
+      } catch (err) {
+        console.error("Erro no fetch populares:", err);
         setPopulares([]);
-        return;
       }
-      const data = await res.json();
-      setPopulares(Array.isArray(data) ? data : []);
-    } catch (err) {
-      console.error("Erro no fetch populares:", err);
-      setPopulares([]);
-    }
-  };
+    };
 
-  // Função para buscar continue (trilhas do usuário) – só se houver token
-  const fetchContinue = async () => {
-    if (!savedToken) return;
-    try {
-      const res = await fetch("http://localhost:5000/api/trilhas/continue", {
-        headers: { Authorization: `Bearer ${savedToken}` },
-      });
-      if (!res.ok) {
-        console.error("Erro ao buscar trilhas iniciadas:", await res.text());
+    // Função para buscar continue (trilhas do usuário) – só se houver token
+    const fetchContinue = async () => {
+      if (!savedToken) return;
+      try {
+        const res = await fetch("http://localhost:5000/api/trilhas/continue", {
+          headers: { Authorization: `Bearer ${savedToken}` },
+        });
+        if (!res.ok) {
+          console.error("Erro ao buscar trilhas iniciadas:", await res.text());
+          setContinueTrilhas([]);
+          return;
+        }
+        const data = await res.json();
+        setContinueTrilhas(Array.isArray(data) ? data : []);
+      } catch (err) {
+        console.error("Erro no fetch continue:", err);
         setContinueTrilhas([]);
-        return;
       }
-      const data = await res.json();
-      setContinueTrilhas(Array.isArray(data) ? data : []);
-    } catch (err) {
-      console.error("Erro no fetch continue:", err);
-      setContinueTrilhas([]);
-    }
-  };
+    };
 
-  // Chamar todas as funções
-  fetchNovidades();
-  fetchPopulares();
-  fetchContinue();
+    // Chamar todas as funções
+    fetchNovidades();
+    fetchPopulares();
+    fetchContinue();
 
-  // Guardar token no estado
-  if (savedToken) setToken(savedToken);
-}, []);
+    // Guardar token no estado
+    if (savedToken) setToken(savedToken);
+  }, []);
   // Registro de visualização
   const handleTrilhaClick = (id: string) => {
     if (!token) return;
@@ -144,9 +152,8 @@ export default function Home() {
           <Section title="Melhores para você" isMobile={isMobile}>
             <Carrousel items={populares} onClick={handleTrilhaClick} />
           </Section>
-
-          <Footer />
         </div>
+        <Footer />
       </div>
     </>
   );
@@ -162,7 +169,9 @@ function Section({
   isMobile: boolean;
 }) {
   return (
-    <div className={`pt-6 w-full ${isMobile ? "px-4" : "max-w-6xl mx-auto px-24"}`}>
+    <div
+      className={`pt-6 w-full ${isMobile ? "px-4" : "max-w-6xl mx-auto px-24"}`}
+    >
       <div
         className={`${
           isMobile ? "text-2xl" : "text-3xl"

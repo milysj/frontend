@@ -20,6 +20,7 @@ const tooltips = [
 // Componente principal da Landing Page
 export default function LandingPage() {
     return (
+        
         <>
         <Script id="microsoft-clarity" strategy="afterInteractive">
                 {`

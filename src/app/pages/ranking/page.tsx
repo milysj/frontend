@@ -23,12 +23,12 @@ export default function RankingPage() {
           {/* ===========================
               Estrutura principal da página
               =========================== */}
-          <div className="flex flex-col min-h-screen">
+          <div className="">
             {/* Topo / Barra de navegação */}
             <Topo />
 
             {/* Área de conteúdo principal */}
-            <div className="flex flex-1">
+            <div className=" flex items-center justify-center min-h-screen">
               <Ranking />
             </div>
 
