@@ -6,6 +6,8 @@ import Topo from "@/app/components/Topo";
 import Footer from "@/app/components/Footer";
 import Carrousel from "@/app/components/Carrousel";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+
 interface Trilha {
   _id: string;
   titulo: string;
@@ -31,40 +33,79 @@ export default function Home() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // Ler token do localStorage no client
   useEffect(() => {
-    const savedToken = localStorage.getItem("token");
-    setToken(savedToken);
-  }, []);
+  const savedToken = localStorage.getItem("token");
 
-  // Carregar trilhas do backend
-  useEffect(() => {
-    // Novidades
-    fetch("http://localhost:5000/api/trilhas/novidades")
-      .then((res) => res.json())
-      .then((data) => setNovidades(data || []))
-      .catch(console.error);
+  const requestInit: RequestInit = {
+    headers: savedToken ? { Authorization: `Bearer ${savedToken}` } : undefined
+  };
 
-    // Populares
-    fetch("http://localhost:5000/api/trilhas/populares")
-      .then((res) => res.json())
-      .then((data) => setPopulares(data || []))
-      .catch(console.error);
-
-    // Continue (trilhas do usuário)
-    if (token) {
-      fetch("http://localhost:5000/api/trilhas/continue", {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-        .then((res) => res.json())
-        .then((data) => setContinueTrilhas(data || []))
-        .catch(console.error);
+  // Função para buscar novidades
+  const fetchNovidades = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/api/trilhas/novidades", requestInit);
+      if (!res.ok) {
+        console.error("Erro ao buscar novidades:", await res.text());
+        setNovidades([]);
+        return;
+      }
+      const data = await res.json();
+      setNovidades(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error("Erro no fetch novidades:", err);
+      setNovidades([]);
     }
-  }, [token]);
+  };
 
+  // Função para buscar populares
+  const fetchPopulares = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/api/trilhas/populares", requestInit);
+      if (!res.ok) {
+        console.error("Erro ao buscar populares:", await res.text());
+        setPopulares([]);
+        return;
+      }
+      const data = await res.json();
+      setPopulares(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error("Erro no fetch populares:", err);
+      setPopulares([]);
+    }
+  };
+
+  // Função para buscar continue (trilhas do usuário) – só se houver token
+  const fetchContinue = async () => {
+    if (!savedToken) return;
+    try {
+      const res = await fetch("http://localhost:5000/api/trilhas/continue", {
+        headers: { Authorization: `Bearer ${savedToken}` },
+      });
+      if (!res.ok) {
+        console.error("Erro ao buscar trilhas iniciadas:", await res.text());
+        setContinueTrilhas([]);
+        return;
+      }
+      const data = await res.json();
+      setContinueTrilhas(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error("Erro no fetch continue:", err);
+      setContinueTrilhas([]);
+    }
+  };
+
+  // Chamar todas as funções
+  fetchNovidades();
+  fetchPopulares();
+  fetchContinue();
+
+  // Guardar token no estado
+  if (savedToken) setToken(savedToken);
+}, []);
+  // Registro de visualização
   const handleTrilhaClick = (id: string) => {
     if (!token) return;
-    fetch(`http://localhost:5000/api/trilhas/visualizar/${id}`, {
+    fetch(`${API_URL}/api/trilhas/visualizar/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     }).catch(console.error);
   };
@@ -84,7 +125,10 @@ export default function Home() {
 
       <div
         className="min-h-screen bg-cover bg-center bg-no-repeat bg-fixed"
-        style={{ backgroundImage: "url('/img/backgroundteste1.png')", backgroundColor: '#f3f4f6' }}
+        style={{
+          backgroundImage: "url('/img/backgroundteste1.png')",
+          backgroundColor: "#f3f4f6",
+        }}
       >
         <div className="relative z-10 flex flex-col min-h-screen">
           <Topo />
@@ -108,10 +152,22 @@ export default function Home() {
   );
 }
 
-function Section({ title, children, isMobile }: { title: string; children: React.ReactNode; isMobile: boolean }) {
+function Section({
+  title,
+  children,
+  isMobile,
+}: {
+  title: string;
+  children: React.ReactNode;
+  isMobile: boolean;
+}) {
   return (
-    <div className={`pt-6 w-full ${isMobile ? 'px-4' : 'max-w-6xl mx-auto px-24'}`}>
-      <div className={`${isMobile ? 'text-2xl' : 'text-3xl'} p-4 rounded-xl font-bold text-gray-800 bg-white bg-opacity-80 backdrop-blur-sm`}>
+    <div className={`pt-6 w-full ${isMobile ? "px-4" : "max-w-6xl mx-auto px-24"}`}>
+      <div
+        className={`${
+          isMobile ? "text-2xl" : "text-3xl"
+        } p-4 rounded-xl font-bold text-gray-800 bg-white bg-opacity-80 backdrop-blur-sm`}
+      >
         {title}
       </div>
       {children}

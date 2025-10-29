@@ -81,8 +81,8 @@ const Topo = () => {
     // },
     {
       icon: <BackpackFill size={18} />,
-      label: "Criar Trilhas",
-      href: "/pages/criarTrilha",
+      label: "Gerenciar Trilhas",
+      href: "/pages/gerenciarTrilha",
     },
     // {
     //   icon: <Cart size={18} />,
