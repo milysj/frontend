@@ -6,12 +6,17 @@ import Topo from "@/app/components/Topo";
 import Script from "next/script";
 import { useState, useEffect } from "react";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+
 export default function MenuTrilhas() {
   const [isMobile, setIsMobile] = useState(false);
   const [token, setToken] = useState<string | null>(null);
   const [continueTrilhas, setContinueTrilhas] = useState<any[]>([]);
   const [novidades, setNovidades] = useState<any[]>([]);
   const [populares, setPopulares] = useState<any[]>([]);
+
+
+
 
   useEffect(() => {
     setIsMobile(window.innerWidth < 992);
@@ -29,7 +34,7 @@ export default function MenuTrilhas() {
     if (!token) return;
 
     // Buscar trilhas do usuário
-    fetch("http://localhost:5000/api/trilhas/continue", {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/trilhas/continue`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then(res => res.json())
@@ -37,16 +42,16 @@ export default function MenuTrilhas() {
       .catch(console.error);
 
     // Novidades
-    fetch("http://localhost:5000/api/trilhas/novidades")
-      .then(res => res.json())
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/trilhas/novidades`)
+      .then((res) => res.json())
       .then(setNovidades)
       .catch(console.error);
 
     // Populares
-    fetch("http://localhost:5000/api/trilhas/populares")
-      .then(res => res.json())
-      .then(setPopulares)
-      .catch(console.error);
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/trilhas/populares`)
+     .then((res) => res.json())
+     .then(setPopulares)
+     .catch(console.error);
   }, [token]);
 
   return (

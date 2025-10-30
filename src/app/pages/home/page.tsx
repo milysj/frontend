@@ -46,7 +46,7 @@ export default function Home() {
     const fetchNovidades = async () => {
       try {
         const res = await fetch(
-          "http://localhost:5000/api/trilhas/novidades",
+          `${API_URL}/api/trilhas/novidades`,
           requestInit
         );
         if (!res.ok) {
@@ -66,7 +66,7 @@ export default function Home() {
     const fetchPopulares = async () => {
       try {
         const res = await fetch(
-          "http://localhost:5000/api/trilhas/populares",
+          `${API_URL}/api/trilhas/populares`,
           requestInit
         );
         if (!res.ok) {
@@ -86,7 +86,7 @@ export default function Home() {
     const fetchContinue = async () => {
       if (!savedToken) return;
       try {
-        const res = await fetch("http://localhost:5000/api/trilhas/continue", {
+        const res = await fetch(`${API_URL}/api/trilhas/continue`, {
           headers: { Authorization: `Bearer ${savedToken}` },
         });
         if (!res.ok) {
