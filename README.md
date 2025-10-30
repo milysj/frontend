@@ -18,6 +18,7 @@ Hospedagem e deploy automatizado em nuvem
 
 👨‍💻 Colaboradores
 Nome	Função
+
 João Milone	💻 Frontend - Backend Developer
 
 João Quaresma	💻 Frontend - Backend Developer
