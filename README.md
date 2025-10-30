@@ -19,7 +19,11 @@ Hospedagem e deploy automatizado em nuvem
 👨‍💻 Colaboradores
 Nome	Função
 João Milone	💻 Frontend - Backend Developer
+
 João Quaresma	💻 Frontend - Backend Developer
+
 Gabriel Lupateli	👨‍💻 Product Owner
+
 Beatriz Siqueira	👩‍💻 Scrum Master
+
 Wallacy José	🧑‍💻 Frontend Devoloper
