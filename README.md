@@ -1,36 +1,25 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+🎓 EstudeMy - FrontEnd
+O EstudeMy é uma plataforma de estudos gamificada, criada para tornar o aprendizado mais dinâmico e envolvente para jovens e estudantes. Professores podem disponibilizar seus cursos, aulas e conteúdos personalizados, enquanto alunos exploram diferentes trilhas de aprendizado, acumulam pontos, conquistas e medalhas conforme avançam nos estudos.
 
-## Getting Started
+📝 Sobre o Projeto
+O EstudeMy é uma plataforma de estudos gamificada, desenvolvida para incentivar o aprendizado de forma interativa e divertida. A aplicação fornece uma API RESTful completa que gerencia usuários, cursos, progresso e interações entre alunos e professores.
 
-First, run the development server:
+O backend garante segurança, escalabilidade e integração simples com o frontend desenvolvido em React/Next.js, permitindo que o sistema evolua continuamente com novas funcionalidades educacionais.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Principais recursos:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Cadastro e autenticação de usuários (alunos e professores)
+CRUD de cursos, aulas e trilhas de aprendizado
+Sistema de pontuação e conquistas gamificadas
+Monitoramento de progresso e desempenho dos alunos
+Integração com banco de dados MongoDB
+Documentação interativa via Swagger UI
+Hospedagem e deploy automatizado em nuvem
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+👨‍💻 Colaboradores
+Nome	Função
+João Milone	💻 Frontend - Backend Developer
+João Quaresma	💻 Frontend - Backend Developer
+Gabriel Lupateli	👨‍💻 Product Owner
+Beatriz Siqueira	👩‍💻 Scrum Master
+Wallacy José	🧑‍💻 Frontend Devoloper
