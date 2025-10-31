@@ -71,7 +71,7 @@ const Cadastrar = () => {
 
       setSucesso("Usuário cadastrado com sucesso!");
       console.log("Usuário cadastrado:", data);
-      window.location.href = "/pages/criarPerfil";
+      window.location.href = "/pages/login";
     } catch (error) {
       console.error(error);
       setMessage("Erro ao conectar com o servidor.");

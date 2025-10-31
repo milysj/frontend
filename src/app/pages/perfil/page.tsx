@@ -60,7 +60,7 @@ export default function PerfilPage() {
               <div className="text-3xl p-3 rounded-xl">
                 <Image
                   className="mx-auto"
-                                    src="/img/personagem.png"
+                  src="/img/guerreiro.png"
                   alt="Imagem do personagem Guerreiro"
                   // src={userData.avatarUrl}
                   // alt={`Imagem do personagem ${userData.username}`}

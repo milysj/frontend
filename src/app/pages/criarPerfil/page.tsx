@@ -11,15 +11,15 @@ export default function CriarPerfil() {
   const [mensagem, setMensagem] = useState("");
 
   const personagens = [
-    { nome: "Guerreiro", imagem: "/img/personagens/guerreiro.png" },
-    { nome: "Mago", imagem: "/img/personagens/mago.png" },
-    { nome: "Samurai", imagem: "/img/personagens/samurai.png" },
+    { nome: "Guerreiro", imagem: "/img/guerreiro.png" },
+    { nome: "Mago", imagem: "/img/mago.png" },
+    { nome: "Samurai", imagem: "/img/samurai.png" },
   ];
 
   const fotosPreDefinidas = [
-    "/img/perfil1.png",
-    "/img/perfil2.png",
-    "/img/perfil3.png",
+    "/img/guerreiro.png",
+    "/img/mago.png",
+    "/img/samurai.png",
   ];
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -298,7 +298,7 @@ const Topo = () => {
           >
             {/* Logo do sistema - ALTERADO: Esconde se a pesquisa mobile estiver aberta */}
             {(!isMobile || (isMobile && !mobileSearchOpen)) && (
-              <Link href="/">
+              <Link href="/pages/home">
                 <div
                   style={{
                     marginLeft: isMobile ? "80px" : "80px",

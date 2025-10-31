@@ -262,12 +262,12 @@ const deletarTrilha = async (id?: string) => {
         Editar
       </button>
       
-<button
+{/* <button
   onClick={() => router.push(`/gerenciarFases?trilhaId=${t._id}&titulo=${t.titulo}`)}
   className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold px-4 py-2 rounded"
 >
   Gerenciar Fases
-</button>
+</button> */}
 
 
 

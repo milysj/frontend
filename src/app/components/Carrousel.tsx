@@ -84,8 +84,8 @@ export default function Carrousel({ items = [], onClick }: Props) {
                   alt={item.titulo}
                   className="mx-auto max-w-30 max-h-24 object-contain my-2 rounded-xl"
                 />
-              )}
-              <div className="p-2">
+              )}           
+              <div className="p-2" >
                 <h3 className="text-base font-bold">{item.titulo}</h3>
                 <p className="text-sm">{item.descricao}</p>
                 <p className="text-xs mt-1">

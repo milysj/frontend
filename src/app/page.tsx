@@ -42,23 +42,23 @@ export default function LandingPage() {
                 {tooltips.map(({icon, text, color}, index) => (
                     <div className="group relative flex items-center" key={index}>
                         {/* Ícone com animação e destaque */}
-                        <motion.div
+                        {/* <motion.div
                             whileHover={{scale: 1.1}}
                             className="bg-[#163043cc] backdrop-blur-md border-2 p-4 rounded-xl shadow-md cursor-pointer"
                             style={{borderColor: color, boxShadow: `0 0 12px ${color}`}}
                         >
                             <span className="text-3xl">{icon}</span>
-                        </motion.div>
+                        </motion.div> */}
 
                         {/* Tooltip (aparece no hover) */}
-                        <motion.div
+                        {/* <motion.div
                             initial={{opacity: 0, x: 0}}
                             whileHover={{opacity: 1, x: 0}}
                             transition={{duration: 0.3}}
                             className="absolute left-16 bg-[#9CC5EB] text-[#163043] px-4 py-2 rounded-md whitespace-nowrap text-md font-bold shadow-lg"
                         >
                             {text}
-                        </motion.div>
+                        </motion.div> */}
                     </div>
                 ))}
             </div>
