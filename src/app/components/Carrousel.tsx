@@ -3,6 +3,7 @@
 import { ChevronRightIcon, ChevronLeftIcon } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
 
+
 interface Trilha {
   _id: string;
   titulo: string;
@@ -10,6 +11,10 @@ interface Trilha {
   materia: string;
   dificuldade: string;
   image?: string;
+  faseSelecionada?: number;
+  fase?: string;
+  dataCriacao?: string;
+  dataTermino?: string;
 }
 
 interface Props {
@@ -22,6 +27,15 @@ export default function Carrousel({ items = [], onClick }: Props) {
   const [screenSize, setScreenSize] = useState<'small' | 'medium' | 'large'>('large');
   const [cardWidth, setCardWidth] = useState('15rem');
   const [scrollAmount, setScrollAmount] = useState(300);
+
+
+  // 🔹 Mapeamento entre número da fase e imagem
+const fases: Record<number, { nome: string; img: string }> = {
+  1: { nome: "Castelo", img: "/img/fases/castelo.jpg" },
+  2: { nome: "Vila", img: "/img/fases/vila.jpg" },
+  3: { nome: "Montanha", img: "/img/fases/montanha.jpg" },
+  4: { nome: "Deserto", img: "/img/fases/deserto.jpg" },
+};
 
   // Detecta tamanho da tela e ajusta cards
   useEffect(() => {
@@ -66,7 +80,7 @@ export default function Carrousel({ items = [], onClick }: Props) {
   return (
     <div className={`flex flex-col items-center gap-4 rounded-xl w-full mx-auto ${isMobile ? 'p-2' : 'p-4'}`}>
       <div className="flex items-center gap-2 w-full">
-        <button onClick={handleScrollLeft} className={`flex-shrink-0 hover:bg-sky-50 rounded ${isSmall ? 'p-0.5' : isMobile ? 'p-1' : 'p-3'}`}>
+        <button onClick={handleScrollLeft} className={`shrink-0 hover:bg-sky-50 rounded ${isSmall ? 'p-0.5' : isMobile ? 'p-1' : 'p-3'}`}>
           <ChevronLeftIcon className={isSmall ? 'w-5 h-5' : isMobile ? 'w-6 h-6' : 'w-10 h-10'} />
         </button>
 
@@ -74,29 +88,36 @@ export default function Carrousel({ items = [], onClick }: Props) {
           {items.map((item) => (
             <div
               key={item._id}
-              onClick={() => onClick?.(item._id)}
-              className="flex-shrink-0 w-full rounded-lg border bg-white shadow hover:shadow-lg cursor-pointer transition"
+              className="shrink-0 w-full rounded-lg border bg-white shadow hover:shadow-lg cursor-pointer transition"
               style={{ minWidth: cardWidth, maxWidth: cardWidth }}
+              onClick={() => onClick?.(item._id)}
             >
-              {item.image && (
-                <img
-                  src={item.image}
-                  alt={item.titulo}
-                  className="mx-auto max-w-30 max-h-24 object-contain my-2 rounded-xl"
-                />
-              )}           
-              <div className="p-2" >
+            {/* Imagem da fase */}
+            <img
+              src={fases[item.faseSelecionada || 1]?.img || "/img/fases/default.jpg"}
+              alt={fases[item.faseSelecionada || 1]?.nome || "Fase"}
+              className="w-full h-32 object-cover rounded-t-lg"
+            />
+
+              <div className="p-3">
                 <h3 className="text-base font-bold">{item.titulo}</h3>
-                <p className="text-sm">{item.descricao}</p>
-                <p className="text-xs mt-1">
+                <p className="text-sm text-gray-600">{item.descricao}</p>
+
+                <p className="text-xs mt-1 text-gray-500">
                   Matéria: <b>{item.materia}</b> | Dificuldade: <b>{item.dificuldade}</b>
                 </p>
+
+                {/* Datas */}
+                <div className="mt-2 text-xs text-gray-400">
+                  {item.dataCriacao && <p>Criada: {new Date(item.dataCriacao).toLocaleDateString("pt-BR")}</p>}
+                  {item.dataTermino && <p>Finaliza: {new Date(item.dataTermino).toLocaleDateString("pt-BR")}</p>}
+                </div>
               </div>
             </div>
           ))}
         </div>
 
-        <button onClick={handleScrollRight} className={`flex-shrink-0 hover:bg-sky-50 rounded ${isSmall ? 'p-0.5' : isMobile ? 'p-1' : 'p-3'}`}>
+        <button onClick={handleScrollRight} className={`shrink-0 hover:bg-sky-50 rounded ${isSmall ? 'p-0.5' : isMobile ? 'p-1' : 'p-3'}`}>
           <ChevronRightIcon className={isSmall ? 'w-5 h-5' : isMobile ? 'w-6 h-6' : 'w-10 h-10'} />
         </button>
       </div>

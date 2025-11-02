@@ -9,9 +9,10 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
 // Mock de fases
 const fases = [
-  { id: 1, nome: "Trilha 1", img: "/fases/fase1.jpg", paga: false },
-  { id: 2, nome: "Trilha 2", img: "/fases/fase2.jpg", paga: true },
-  { id: 3, nome: "Trilha 3", img: "/fases/fase3.jpg", paga: false },
+  { id: 1, nome: "Castelo", img: "/img/fases/castelo.jpg", paga: false },
+  { id: 2, nome: "Vila", img: "/img/fases/vila.jpg", paga: true },
+  { id: 3, nome: "Montanha", img: "/img/fases/montanha.jpg", paga: false },
+  { id: 4, nome: "Deserto", img: "/img/fases/deserto.jpg", paga: false },
 ];
 
 // Lista de matérias
@@ -243,43 +244,64 @@ const deletarTrilha = async (id?: string) => {
         <h2 className="text-2xl font-bold mb-4">Minhas Trilhas</h2>
         {trilhas.length === 0 && <p>Nenhuma trilha criada ainda.</p>}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-{trilhas.map((t) => (
-  <div
-    key={t.id ?? (t as any)._id} // usa id ou _id do MongoDB
-    className="bg-white rounded shadow-md p-4 flex flex-col gap-2"
-  >
-    <h3 className="font-semibold text-lg">{t.titulo}</h3>
-    <p className="text-sm">{t.descricao}</p>
-    <p className="text-xs text-gray-500">
-      {t.materia} - {t.dificuldade} -{" "}
-      {t.pagamento === "Paga" ? "Pago" : "Gratuito"}
-    </p>
-    <div className="flex justify-between mt-2">
-      <button
-        className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600"
-        onClick={() => editarTrilha(t)}
-      >
-        Editar
-      </button>
-      
-{/* <button
+{trilhas.map((t) => {
+  const fase = fases.find((f) => f.id === t.faseSelecionada);
+
+  return (
+    <div
+      key={t.id ?? (t as any)._id}
+      className="bg-white rounded shadow-md p-4 flex flex-col gap-2"
+    >
+      {/* Imagem da fase */}
+      {fase && (
+        <img
+          src={fase.img}
+          alt={fase.nome}
+          className="w-full h-40 object-cover rounded-md mb-2"
+        />
+      )}
+
+      <h3 className="font-semibold text-lg">{t.titulo}</h3>
+      <p className="text-sm">{t.descricao}</p>
+      <p className="text-xs text-gray-500">
+        {t.materia} - {t.dificuldade} -{" "}
+        {t.pagamento === "Paga" ? "Pago" : "Gratuito"}
+      </p>
+
+      {/* Datas */}
+      <p className="text-xs text-gray-500">
+        Criado em: {new Date(t.dataCriacao).toLocaleDateString()} <br />
+        {t.dataTermino && (
+          <>Término: {new Date(t.dataTermino).toLocaleDateString()}</>
+        )}
+      </p>
+
+      <div className="flex justify-between mt-2">
+        <button
+          className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600"
+          onClick={() => editarTrilha(t)}
+        >
+          Editar
+        </button>
+ <button
   onClick={() => router.push(`/gerenciarFases?trilhaId=${t._id}&titulo=${t.titulo}`)}
   className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold px-4 py-2 rounded"
 >
   Gerenciar Fases
-</button> */}
+</button> 
 
 
 
       <button
-        className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
-        onClick={() => deletarTrilha(t.id ?? (t as any)._id)}
-      >
-        Deletar
-      </button>
+          className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
+          onClick={() => deletarTrilha(t.id ?? (t as any)._id)}
+        >
+          Deletar
+        </button>
+      </div>
     </div>
-  </div>
-))}
+  );
+})}
         </div>
       </div>
 

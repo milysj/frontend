@@ -1,5 +1,5 @@
 import React from "react";
-import DadosPessoais from "@/app/components/DadosPessoais"; // Componente de dados pessoais do usuário
+import DadosPessoais from "@/app/components/EditarPersonagem"; // Componente de dados pessoais do usuário
 import Footer from "@/app/components/Footer";               // Componente do rodapé
 import Topo from "@/app/components/Topo";                   // Componente do topo/navegação
 

@@ -89,8 +89,8 @@ export default function PerfilPage() {
 
               {/* Botões de navegação do perfil */}
               <div className="buttons-container">
-                <Link className="blue-btn" href={"/pages/dadosPessoais"}>
-                  DADOS PESSOAIS
+                <Link className="blue-btn" href={"/pages/editarPersonagem"}>
+                  PERSONAGEM
                 </Link>
                 <Link className="blue-btn" href={"/pages/conta"}>
                   CONTA
